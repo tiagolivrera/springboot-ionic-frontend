@@ -10,6 +10,6 @@ export class CategoriaService {
 
   // Observable: a captura de dados da API é feita de forma assíncrona, por isso usa-se um "observador" com o tipo de dados que se espera receber.
   findAll(): Observable<CategoriaDTO[]> {
-    return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseURL}/categorias`);
+    return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseURL}/categoriass`);
   }
 }
