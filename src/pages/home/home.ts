@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, MenuController, NavController } from "ionic-angular";
+import { CredenciaisDTO } from "../../models/credenciais.dto";
 
 @IonicPage()
 @Component({
@@ -7,6 +8,13 @@ import { IonicPage, MenuController, NavController } from "ionic-angular";
   templateUrl: "home.html",
 })
 export class HomePage {
+
+  // objeto recebe o valor dos campos login e senha (inicia vazio)
+  creds : CredenciaisDTO = {
+    email: "",
+    senha: ""
+  };
+
   constructor(public navCtrl: NavController, public menu: MenuController) {}
 
   // desabilita o menu lateral na tela de login
@@ -20,6 +28,7 @@ export class HomePage {
   }
 
   login() {
+    console.log(this.creds);
     this.navCtrl.setRoot("CategoriasPage");
   }
 }
