@@ -9,14 +9,15 @@ import { ClienteDTO } from "../../models/cliente.dto";
 export class ClienteService {
   constructor(public http: HttpClient, public storage: StorageService) { }
 
+  //processa o token no auth-interceptor.ts
   findByEmail(email: string): Observable<ClienteDTO> {
-    let token = this.storage.getLocalUser().token;
-    let authHeader = new HttpHeaders({ 'Authorization': 'Bearer ' + token });
+    //let token = this.storage.getLocalUser().token;
+    //let authHeader = new HttpHeaders({ 'Authorization': 'Bearer ' + token });
 
     // utilizando a url do mesmo jeito que foi definido no endpoint do backend
     return this.http.get<ClienteDTO>(
-      `${API_CONFIG.baseURL}/clientes/email?value=${email}`,
-      { 'headers': authHeader } // passando o cabecalho para a requisicao
+      `${API_CONFIG.baseURL}/clientes/email?value=${email}`//,
+      //{ 'headers': authHeader } // passando o cabecalho para a requisicao
     );
   }
 
