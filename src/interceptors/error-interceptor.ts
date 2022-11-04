@@ -14,7 +14,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log("passou");
+    //console.log("passou");
     return next.handle(req).catch((error, caught) => {
       // saida de erro personalizado: retorna no console apenas o campo erro da mensagem
       let errorObj = error;
@@ -26,8 +26,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         errorObj = JSON.parse(errorObj);
       }
 
-      console.log("Erro capturado pelo interceptor:");
-      console.log(errorObj);
+      //console.log("Erro capturado pelo interceptor:");
+      //console.log(errorObj);
 
       return Observable.throw(errorObj);
     }) as any;

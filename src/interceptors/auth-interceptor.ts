@@ -1,3 +1,4 @@
+import { API_CONFIG } from './../config/api.config';
 import { StorageService } from './../services/storage.service';
 import {
   HttpEvent,
@@ -21,8 +22,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
     let localUser = this.storage.getLocalUser();
 
+    // verifica se o cabecalho da requisicao comeca com baseURL. Caso sim, entrega a autorizacao
+    let N = API_CONFIG.baseURL.length;
+    let requestToAPI = req.url.substring(0, N) == API_CONFIG.baseURL; // caso seja verdadeiro, a requisicao é de fato para a nossa API
+
     // verifica se ha um localUser no storage
-    if (localUser) {
+    if (localUser && requestToAPI) {
       const authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + localUser.token) });
       return next.handle(authReq);
     } else {
