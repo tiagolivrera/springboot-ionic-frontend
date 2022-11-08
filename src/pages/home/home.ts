@@ -11,12 +11,12 @@ import { AuthService } from "../../services/auth.service";
 export class HomePage {
 
   // objeto recebe o valor dos campos login e senha (inicia vazio)
-  creds : CredenciaisDTO = {
+  creds: CredenciaisDTO = {
     email: "",
     senha: ""
   };
 
-  constructor(public navCtrl: NavController, public menu: MenuController, public auth: AuthService) {}
+  constructor(public navCtrl: NavController, public menu: MenuController, public auth: AuthService) { }
 
   // desabilita o menu lateral na tela de login
   ionViewWillEnter() {
@@ -28,12 +28,21 @@ export class HomePage {
     this.menu.swipeEnable(true);
   }
 
+  ionViewDidEnter() {
+    this.auth.refreshToken()
+      .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot("CategoriasPage");
+      },
+        error => { })
+  }
+
   login() {
     this.auth.authenticate(this.creds)
       .subscribe(response => {
         this.auth.successfulLogin(response.headers.get('Authorization'));
         this.navCtrl.setRoot("CategoriasPage");
       },
-      error => {})
+        error => { })
   }
 }

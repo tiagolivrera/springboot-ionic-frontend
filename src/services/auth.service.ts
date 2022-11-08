@@ -11,13 +11,21 @@ export class AuthService {
 
   jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(public http: HttpClient, public storage: StorageService) {}
+  constructor(public http: HttpClient, public storage: StorageService) { }
 
   authenticate(creds: CredenciaisDTO) {
     // acessa o backend para fazer o login
     return this.http.post(`${API_CONFIG.baseURL}/login`, creds, {
       observe: "response", // captura a resposta do login via backend
       responseType: "text", // o corpo da resposta e vazio, entao uso um tipo texto pq senao o front pode converter para JSON, o que pode dar erro
+    });
+  }
+
+  refreshToken() {
+    // o token é incluído automaticamente na requisição pelo interceptor
+    return this.http.post(`${API_CONFIG.baseURL}/auth/refresh_token`, {}, {
+      observe: "response",
+      responseType: "text",
     });
   }
 
